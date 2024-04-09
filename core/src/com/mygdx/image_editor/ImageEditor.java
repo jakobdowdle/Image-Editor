@@ -18,11 +18,7 @@ public class ImageEditor extends ApplicationAdapter {
 	SpriteBatch batch;
 	public Array<Rec2D> Rectangles = new Array<Rec2D>();
 	public Vector2 ScreenSize;
-//	Button button1;
-//	Button button2;
-//	Button button3;
-//	Button button4;
-//	Button button5;
+	private EditWindow _editWindow;
 
 	@Override
 	public void create () {
@@ -31,28 +27,11 @@ public class ImageEditor extends ApplicationAdapter {
 		ScreenSize = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		InputManager inputManager = new InputManager();
 		Gdx.input.setInputProcessor(inputManager);
-		Vector2 rectangleScale = new Vector2(100,100);
-//		button1 = new Button(
-//			 rectangleScale,
-//			 new Vector2(ScreenSize.x / 2f - rectangleScale.x / 2f, ScreenSize.y / 2f - rectangleScale.y / 2f),
-//			 Color.WHITE);
-//		button2 = new Button(
-//			 rectangleScale,
-//			 new Vector2(ScreenSize.x / 2f - rectangleScale.x * 2, 1.5f*(ScreenSize.y / 2f - rectangleScale.y / 2f)),
-//			 Color.RED);
-//		button3 = new Button(
-//				 rectangleScale,
-//				 new Vector2(ScreenSize.x / 2f + rectangleScale.x, 1.5f*(ScreenSize.y / 2f - rectangleScale.y / 2f)),
-//				 Color.BLUE);
-//		button4 = new Button(
-//				 rectangleScale,
-//				 new Vector2(ScreenSize.x / 2f - rectangleScale.x * 2, .5f*(ScreenSize.y / 2f - rectangleScale.y / 2f)),
-//				 Color.ORANGE);
-//		button5 = new Button(
-//			 rectangleScale,
-//			 new Vector2(ScreenSize.x / 2f + rectangleScale.x, .5f*(ScreenSize.y / 2f - rectangleScale.y / 2f)),
-//			 Color.GREEN);
-		
+		Vector2 editWindowSize = new Vector2(500, ScreenSize.y - 50);
+		_editWindow = new EditWindow(
+		 editWindowSize, new Vector2(ScreenSize.x - editWindowSize.x, 0), Color.GRAY
+		);
+		Button b = new Button(new Vector2 (50, 50), Vector2.Zero, Color.GOLD);
 		CollisionManager collisionManager = new CollisionManager();
 
 	}
@@ -66,6 +45,8 @@ public class ImageEditor extends ApplicationAdapter {
 			rec = Rectangles.get(i);
 			batch.draw(rec.RecTexture, rec.Position.x, rec.Position.y, rec.Scale.x, rec.Scale.y);
 		}
+		batch.draw(_editWindow.DoodleTexture, _editWindow.Position.x,
+			_editWindow.Position.y, _editWindow.Scale.x, _editWindow.Scale.y);
 		batch.end();
 	}
 	

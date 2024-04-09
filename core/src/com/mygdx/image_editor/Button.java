@@ -3,12 +3,13 @@ package com.mygdx.image_editor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
-public class Button extends Rec2D {
+public class Button extends Rec2D implements IClickable, IHoverable {
 	private Color _startColor;
 	public Button(Vector2 scale, Vector2 position, Color recColor) {
 		super(scale, position, recColor);
 		_startColor = recColor;
-		InputManager.Instance.Buttons.add(this);
+		InputManager.Instance.Clickables.add(this);
+		InputManager.Instance.Hoverables.add(this);
 		_state = ButtonState.None;
 	}
 	
@@ -27,17 +28,23 @@ public class Button extends Rec2D {
 		generateTexture();
 		}
 	
-	public void onClickUp()
+	public void onClickUp(Vector2 clickPosition)
 	{
 		_state = ButtonState.Hovered;
 		_recColor = new Color(_startColor.r / 2f, _startColor.g / 2f , _startColor.b / 2f, 1);
 		generateTexture();
 	}
 	
-	public void onClickDown() {	
+	public void onClickDown(Vector2 clickPosition) {	
 		_state = ButtonState.Clicked;
 		_recColor = new Color(_startColor.r / 4f, _startColor.g / 4f , _startColor.b / 4f, 1);
 		generateTexture();
+	}
+
+	@Override
+	public void onClickDragged(Vector2 clickPosition) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
