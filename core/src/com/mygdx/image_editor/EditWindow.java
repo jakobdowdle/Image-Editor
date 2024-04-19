@@ -8,15 +8,17 @@ import com.badlogic.gdx.math.Vector2;
 
 public class EditWindow extends Rec2D implements IClickable {
 	public Texture DoodleTexture;
-	private Pixmap _doodleMap;
+	public Pixmap _doodleMap;
 	private Vector2 _previousPaintPosition;
+	public static EditWindow Instance;
 	
-	public EditWindow(Vector2 scale, Vector2 position, Color backgroundColor) {
-		super(scale, position, backgroundColor);
+	public EditWindow(Vector2 scale, Vector2 position) {
+		super(scale, position, Color.GRAY);
 		_doodleMap = new Pixmap((int) scale.x, (int) scale.y, Format.RGBA8888);
 		_doodleMap.setColor(Color.ORANGE);
 		DoodleTexture = new Texture(_doodleMap);
 		InputManager.Instance.Clickables.add(this);
+		Instance = this;
 	}
 	@Override
 	public void onClickUp(Vector2 mousePosition) {

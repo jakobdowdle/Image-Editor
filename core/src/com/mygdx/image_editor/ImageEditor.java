@@ -1,5 +1,6 @@
 package com.mygdx.image_editor;
 
+import java.io.IOException;
 import java.util.Random;
 
 import com.badlogic.gdx.ApplicationAdapter;
@@ -22,18 +23,17 @@ public class ImageEditor extends ApplicationAdapter {
 
 	@Override
 	public void create () {
+		Util.testIntToSignedBytes();
 		Instance = this;
 		new ImageInputOutput();
-		Pixmap editMap = ImageInputOutput.Instance.loadImage("blackbuck.bmp");
+//		Pixmap editMap = ImageInputOutput.Instance.loadImage("testImage.bmp");
 		batch = new SpriteBatch();
 		ScreenSize = new Vector2(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		InputManager inputManager = new InputManager();
 		Gdx.input.setInputProcessor(inputManager);
 		Vector2 editWindowSize = new Vector2(500, ScreenSize.y - 50);
 		_editWindow = new EditWindow(
-		 editWindowSize, new Vector2(ScreenSize.x - editWindowSize.x, 0), Color.GRAY
-		);
-		_editWindow.DoodleTexture = new Texture(editMap);
+		 editWindowSize, new Vector2(ScreenSize.x - editWindowSize.x, 0));
 		Button b = new Button(new Vector2 (50, 50), Vector2.Zero, Color.GOLD);
 		CollisionManager collisionManager = new CollisionManager();
 
@@ -58,4 +58,13 @@ public class ImageEditor extends ApplicationAdapter {
 		batch.dispose();
 //		rectangle.dispose();
 	}
+	
+	public void filesImported(String[] filePaths) {
+		for(int i = 0; i < filePaths.length; i++) {
+			Pixmap map = ImageInputOutput.Instance.loadImage(filePaths[0]);
+			if(map == null) return;
+			_editWindow.RecTexture = new Texture(map);
+		}
+	}
+
 }

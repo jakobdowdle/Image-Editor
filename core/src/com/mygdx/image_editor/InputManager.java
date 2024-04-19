@@ -1,5 +1,9 @@
 package com.mygdx.image_editor;
 
+import java.io.IOException;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
@@ -15,8 +19,19 @@ public class InputManager implements InputProcessor{
 		Instance = this;
 	}
 	
-	public boolean keyDown(int keycode) {return false;}
-	public boolean keyUp(int keycode) {return false;}
+	private boolean _controlPressed;
+	public boolean keyDown(int keycode) {
+		if(_controlPressed && keycode == Keys.S)
+			try {ImageInputOutput.Instance.saveImage("C:/Users/jakob/Desktop/output.bmp");}
+			catch (IOException e) {e.printStackTrace();}
+		if(keycode == Keys.CONTROL_LEFT) _controlPressed = true;
+		return false;
+	}
+	public boolean keyUp(int keycode) {
+		if(keycode == Keys.CONTROL_LEFT) _controlPressed = false;
+		return false;
+	}
+
 	public boolean keyTyped(char character) {return false;}
 	
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -28,7 +43,7 @@ public class InputManager implements InputProcessor{
 	}
 	
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-		if(_currentlyClicked != null) {
+		if(_currentlyClicked != null)
 			_currentlyClicked.onClickUp(new Vector2(screenX, ImageEditor.Instance.ScreenSize.y - screenY));
 		
 		return true;
