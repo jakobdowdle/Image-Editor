@@ -13,6 +13,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("ImageEditor");
 		config.setWindowedMode(584, 480);
+		config.setResizable(false);
 		ImageEditor editor = new ImageEditor();
 		config.setWindowListener(new Lwjgl3WindowAdapter() {
 			public void filesDropped (String[] files) {

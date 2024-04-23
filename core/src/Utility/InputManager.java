@@ -1,4 +1,4 @@
-package com.mygdx.image_editor;
+package Utility;
 
 import java.io.IOException;
 
@@ -8,6 +8,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.mygdx.image_editor.ImageEditor;
 
 public class InputManager implements InputProcessor{
 	public Array<IClickable> Clickables = new Array<IClickable>();
@@ -22,7 +23,8 @@ public class InputManager implements InputProcessor{
 	private boolean _controlPressed;
 	public boolean keyDown(int keycode) {
 		if(_controlPressed && keycode == Keys.S)
-			try {ImageInputOutput.Instance.saveImage("C:/Users/jakob/Desktop/output.bmp");}
+			if(ImageInputOutput.Instance.ImageFolderLocation == null) return false;
+			try {ImageInputOutput.Instance.saveImage(ImageInputOutput.Instance.ImageFolderLocation + "\\output.bmp");}
 			catch (IOException e) {e.printStackTrace();}
 		if(keycode == Keys.CONTROL_LEFT) _controlPressed = true;
 		return false;
@@ -66,6 +68,7 @@ public class InputManager implements InputProcessor{
 		
 		if(collision != _currentlyHovered && _currentlyHovered != null) _currentlyHovered.onHoverExit();
 		if(collision != null) collision.onHovered();
+		if(collision != _currentlyHovered) _currentlyClicked = null;
 		
 		_currentlyHovered = collision;
 			

@@ -11,6 +11,7 @@ public class Rec2D {
 	public Vector2 Position;
 	public Texture RecTexture;
 	private Pixmap _pixelMap;
+	public Outline Outline;
 	protected Color _recColor;
 	
 	public Rec2D(Vector2 scale, Vector2 position, Color recColor) {
@@ -18,6 +19,7 @@ public class Rec2D {
 		Scale = scale;
 		_recColor = recColor;
 		generateTexture();
+		Outline = new Outline(scale, Color.BLACK, 1);
 		ImageEditor.Instance.Rectangles.add(this);
 	}
 	
